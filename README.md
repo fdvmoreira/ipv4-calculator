@@ -1,2 +1,2 @@
-# ipv4-calculator
-IPv4 Calculator
+# IPv4 Subnet Calculator
+IPv4 Subnet Calculator
