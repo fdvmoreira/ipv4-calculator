@@ -33,7 +33,3 @@ html {
   text-align: center;
   background-color: var(--background-color);
 }
-
-.input-control:focus {
-  border: none;
-}
