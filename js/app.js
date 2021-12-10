@@ -47,6 +47,4 @@ form.onsubmit = () => {
  * @param {Integer} max - highest value
  * @returns true if the is between min and max
  */
-const isInRange = (number, min, max) => {
-    return (number >= min && number <= max);
-}
+const isInRange = (number, min, max) => (number >= min && number <= max);
