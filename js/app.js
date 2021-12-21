@@ -4,6 +4,7 @@
 // [*] get ip address
 // [*] split the ip subnetmask from address
 // [*] validate the ip address
+// [] get IP class
 // [] construct the subnetmask
 // [] validate the subnetmask
 // [] AND the mask to find network and host portions
@@ -38,6 +39,8 @@ form.onsubmit = () => {
         return;
     }
 
+    const IPv4Class = getIpv4Class();
+
 }
 
 /**
@@ -47,4 +50,28 @@ form.onsubmit = () => {
  * @param {Integer} max - highest value
  * @returns true if the is between min and max
  */
-const isInRange = (number, min, max) => (number >= min && number <= max);
+export const isInRange = (number, min, max) => (number >= min && number <= max);
+
+export const getIpv4Class = (firstOctect) => {
+    let ipClass;
+    switch (firstOctect) {
+        case firstOctect > -1 && firstOctect <= 126:
+            ipClass = IPClass.A;
+            break;
+        case firstOctect >= 128 && firstOctect <= 191:
+            ipClass = IPClass.B;
+            break;
+        case firstOctect >= 192 && firstOctect <= 223:
+            ipClass = IPClass.C;
+            break;
+        case firstOctect >= 224 && firstOctect <= 239:
+            ipClass = IPClass.D;
+            break;
+        case firstOctect >= 240 && firstOctect <= 255:
+            ipClass = IPClass.E;
+            break;
+        default:
+
+    }
+    return ipClass;
+}
