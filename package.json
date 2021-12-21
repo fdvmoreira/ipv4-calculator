@@ -1,0 +1,20 @@
+{
+  "name": "ipv4-calculator",
+  "version": "1.0.0",
+  "description": "IPv4 Subnet Calculator",
+  "main": "/js/app.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fdvmoreira/ipv4-subnet-calculator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fdvmoreira/ipv4-subnet-calculator/issues"
+  },
+  "homepage": "https://github.com/fdvmoreira/ipv4-subnet-calculator#readme"
+}
