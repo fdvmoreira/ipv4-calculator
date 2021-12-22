@@ -4,9 +4,9 @@
 // [*] get ip address
 // [*] split the ip subnetmask from address
 // [*] validate the ip address
-// [] get IP class
-// [] construct the subnetmask
+// [*] get IP class
 // [] validate the subnetmask
+// [] construct the subnetmask
 // [] AND the mask to find network and host portions
 // [] count the subnet and host bits
 // [] get the network and the broadcast address of each subnet
@@ -14,6 +14,7 @@
 // 
 // 
 
+import IPClass from 'IPClass';
 
 const form = document.querySelector("form");
 const ipAddressTextField = document.getElementById('ip-address-tf');
@@ -39,7 +40,15 @@ form.onsubmit = () => {
         return;
     }
 
+    // get IP class
     const IPv4Class = getIpv4Class();
+
+    // if subnet is valid go ahead and contract the full address
+    // create subnet from slash-notation
+    // const fullSubnetMask = getSubnetMask(subnetMask);
+
+    //
+
 
 }
 
@@ -50,9 +59,8 @@ form.onsubmit = () => {
  * @param {Integer} max - highest value
  * @returns true if the is between min and max
  */
-export const isInRange = (number, min, max) => (number >= min && number <= max);
-
-export const getIpv4Class = (firstOctect) => {
+const isInRange = (number, min, max) => (number >= min && number <= max);
+const getIpv4Class = (firstOctect) => {
     let ipClass;
     switch (firstOctect) {
         case firstOctect > -1 && firstOctect <= 126:
@@ -71,7 +79,23 @@ export const getIpv4Class = (firstOctect) => {
             ipClass = IPClass.E;
             break;
         default:
-
     }
     return ipClass;
 }
+
+const isSubnetValid = (ipClass, slash) => {
+    if (ipClass == IPClass.A && slash < 8 ||
+        ipClass == IPClass.B && slash < 16 ||
+        ipClass == IPClass.C && slash < 24 ||
+        ipClass == IPClass.D && slash < 27 ||
+        ipClass == IPClass.E && slash < 28) {
+        return false;
+    }
+    return true;
+}
+
+const getFullSubnetMask = (subnetMask) => {
+    // 
+}
+
+export { isInRange, getIpv4Class };
