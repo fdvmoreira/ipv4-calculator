@@ -1,7 +1,7 @@
 class IPClass {
-    static A = new Symbol("A");
-    static B = new Symbol("B");
-    static C = new Symbol("C");
-    static D = new Symbol("D");
+    static A = Symbol("A");
+    static B = Symbol("B");
+    static C = Symbol("C");
+    static D = Symbol("D");
 }
 
