@@ -66,25 +66,21 @@ document.onload = () => {
  * @returns true if the is between min and max
  */
 const isInRange = (number, min, max) => (number >= min && number <= max);
+
 const getIpv4Class = (firstOctect) => {
     let ipClass;
-    switch (firstOctect) {
-        case firstOctect > -1 && firstOctect <= 126:
-            ipClass = IPClass.A;
-            break;
-        case firstOctect >= 128 && firstOctect <= 191:
-            ipClass = IPClass.B;
-            break;
-        case firstOctect >= 192 && firstOctect <= 223:
-            ipClass = IPClass.C;
-            break;
-        case firstOctect >= 224 && firstOctect <= 239:
-            ipClass = IPClass.D;
-            break;
-        case firstOctect >= 240 && firstOctect <= 255:
-            ipClass = IPClass.E;
-            break;
-        default:
+    if (isInRange(firstOctect, 0, 126))
+        ipClass = IPClass.A;
+    else if (isInRange(firstOctect, 128, 191))
+        ipClass = IPClass.B;
+    else if (isInRange(firstOctect, 192, 223))
+        ipClass = IPClass.C;
+    else if (isInRange(firstOctect, 224, 239))
+        ipClass = IPClass.D;
+    else if (isInRange(firstOctect, 240, 255))
+        ipClass = IPClass.E;
+    else {
+        ipClass = "Invalid first Octect.";
     }
     return ipClass;
 }
