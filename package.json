@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/fdvmoreira/ipv4-subnet-calculator/issues"
   },
-  "homepage": "https://github.com/fdvmoreira/ipv4-subnet-calculator#readme"
+  "homepage": "https://github.com/fdvmoreira/ipv4-subnet-calculator#readme",
+  "devDependencies": {
+    "@babel/preset-env": "^7.16.5"
+  }
 }
