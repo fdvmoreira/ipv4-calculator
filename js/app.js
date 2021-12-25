@@ -14,7 +14,7 @@
 // 
 // 
 
-import IPClass from 'IPClass';
+import IPClass from './IPClass';
 
 const form = document.querySelector("form");
 const ipAddressTextField = document.getElementById('ip-address-tf');
