@@ -16,41 +16,47 @@
 
 import IPClass from './IPClass';
 
-const form = document.querySelector("form");
-const ipAddressTextField = document.getElementById('ip-address-tf');
-form.onsubmit = () => {
-    // alert(ipAddressTextField.value);
-    let input = ipAddressTextField.value;
+document.onload = () => {
 
-    if (!input.trim().length > 0) return;//show error and ruturn
-    let ipAddress = input.split('.');
-    if (ipAddress.length !== 4) return;// invalid ip address
+    const form = document.querySelector("form");
+    const ipAddressTextField = document.getElementById('ip-address-tf');
 
-    // get the subnetmask from ipAddress' last octect and convert it to into integer
-    let subnetMask = parseInt(ipAddress[3].split('/')[1]);
 
-    // convert to integer and validate ip IP Address
-    ipAddress[3] = ipAddress[3].split('/')[0];
-    ipAddress.forEach((value, index, array) => {
-        array[index] = parseInt(value);
-    });
 
-    if (!(ipAddress.every(element => isInRange(element, 0, 255)))) {
-        // log error
-        return;
+    form.onsubmit = () => {
+        // alert(ipAddressTextField.value);
+        let input = ipAddressTextField.value;
+
+        if (!input.trim().length > 0) return;//show error and ruturn
+        let ipAddress = input.split('.');
+        if (ipAddress.length !== 4) return;// invalid ip address
+
+        // get the subnetmask from ipAddress' last octect and convert it to into integer
+        let subnetMask = parseInt(ipAddress[3].split('/')[1]);
+
+        // convert to integer and validate ip IP Address
+        ipAddress[3] = ipAddress[3].split('/')[0];
+        ipAddress.forEach((value, index, array) => {
+            array[index] = parseInt(value);
+        });
+
+        if (!(ipAddress.every(element => isInRange(element, 0, 255)))) {
+            // log error
+            return;
+        }
+
+        // get IP class
+        const IPv4Class = getIpv4Class();
+
+        // if subnet is valid go ahead and contract the full address
+        // create subnet from slash-notation
+        // const fullSubnetMask = getSubnetMask(subnetMask);
+
+        //
+
+
     }
-
-    // get IP class
-    const IPv4Class = getIpv4Class();
-
-    // if subnet is valid go ahead and contract the full address
-    // create subnet from slash-notation
-    // const fullSubnetMask = getSubnetMask(subnetMask);
-
-    //
-
-
-}
+} // end loading document
 
 /**
  * check the if a number is in range
