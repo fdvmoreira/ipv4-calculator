@@ -85,7 +85,7 @@ const getIpv4Class = (firstOctect) => {
     return ipClass;
 }
 
-const isSubnetValid = (ipClass, slash) => {
+export const isSubnetValid = (ipClass, slash) => {
     if (ipClass == IPClass.A && slash < 8 ||
         ipClass == IPClass.B && slash < 16 ||
         ipClass == IPClass.C && slash < 24 ||
