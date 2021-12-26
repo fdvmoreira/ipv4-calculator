@@ -65,9 +65,14 @@ document.onload = () => {
  * @param {Integer} max - highest value
  * @returns true if the is between min and max
  */
-const isInRange = (number, min, max) => (number >= min && number <= max);
+export const isInRange = (number, min, max) => (number >= min && number <= max);
 
-const getIpv4Class = (firstOctect) => {
+/**
+ * Find which network class this IP address belongs to
+ * @param {Integer} firstOctect - the first octect of Ip address
+ * @returns the IP class
+ */
+export const getIpv4Class = (firstOctect) => {
     let ipClass;
     if (isInRange(firstOctect, 0, 126))
         ipClass = IPClass.A;
@@ -85,6 +90,12 @@ const getIpv4Class = (firstOctect) => {
     return ipClass;
 }
 
+/**
+ * Find out if the slash notation gotten from IP address is valid
+ * @param {IPClass} ipClass - IP class obtained from first octect
+ * @param {Integer} slash - the /number gotten from IP address
+ * @returns true or false
+ */
 export const isSubnetValid = (ipClass, slash) => {
     if (ipClass == IPClass.A && slash < 8 ||
         ipClass == IPClass.B && slash < 16 ||
@@ -96,8 +107,25 @@ export const isSubnetValid = (ipClass, slash) => {
     return true;
 }
 
-const getFullSubnetMask = (subnetMask) => {
-    // 
-}
+/**
+ * Construct full subnetmask based on slash notaion
+ * @param {Number} slashNotation  - the number of ON bits
+ * @returns and array of lenght 4 octects
+ */
+export const getFullSubnetMask = (slashNotation) => {
+    let subnetMask;
 
-export { isInRange, getIpv4Class };
+    // if the number is outside range 8-30 returns -1 
+    if (!isInRange(slashNotation, 8, 30)) return -1;
+
+    let bits = "000000000000000000000000000000";
+    for (let index = 0; index < slashNotation; index++) {
+        bits[index] = "1";
+    }
+    subnetMask.push(parseInt(bits.substring(0, 8), 2));
+    subnetMask.push(parseInt(bits.substring(8, 16), 2));
+    subnetMask.push(parseInt(bits.substring(16, 24), 2));
+    subnetMask.push(parseInt(bits.substring(24, 30), 2));
+
+    return subnetMask;
+}
