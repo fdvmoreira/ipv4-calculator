@@ -1,5 +1,5 @@
 // let app = require("../js/app.js");
-import { isInRange, getIpv4Class, isSubnetValid } from '../js/app';
+import { isInRange, getIpv4Class, isSubnetValid, getFullSubnetMask } from '../js/app';
 import IPClass from '../js/IPClass';
 
 describe("isInRange()", () => {
@@ -57,5 +57,17 @@ describe("isSubnetValid()", () => {
     });
     it("expect isSubnetValid(IPClass.E, 28) to be True", () => {
         expect(isSubnetValid(IPClass.E, 28)).toBeTruthy();
+    });
+});
+
+describe("getFullSubnetMask", () => {
+    it("getFullSubnetMask(4) should return -1", () => {
+        expect(getFullSubnetMask(4)).toBe(-1);
+    });
+    it("getFullSubnetMask(31) should return -1", () => {
+        expect(getFullSubnetMask(31)).toBe(-1);
+    });
+    it("getFullSubnetMask(9) should return [255,1,0,0]", () => {
+        expect(JSON.stringify(getFullSubnetMask(9))).toMatch(JSON.stringify([255, 1, 0, 0]));
     });
 });
