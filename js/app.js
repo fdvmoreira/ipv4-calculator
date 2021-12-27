@@ -5,8 +5,8 @@
 // [*] split the ip subnetmask from address
 // [*] validate the ip address
 // [*] get IP class
-// [] validate the subnetmask
-// [] construct the subnetmask
+// [*] validate the subnetmask
+// [*] construct the subnetmask
 // [] AND the mask to find network and host portions
 // [] count the subnet and host bits
 // [] get the network and the broadcast address of each subnet
@@ -21,8 +21,7 @@ document.onload = () => {
     const form = document.querySelector("form");
     const ipAddressTextField = document.getElementById('ip-address-tf');
 
-
-
+    // event triggered when submit button is pressed
     form.onsubmit = () => {
         // alert(ipAddressTextField.value);
         let input = ipAddressTextField.value;
@@ -32,7 +31,7 @@ document.onload = () => {
         if (ipAddress.length !== 4) return;// invalid ip address
 
         // get the subnetmask from ipAddress' last octect and convert it to into integer
-        let subnetMask = parseInt(ipAddress[3].split('/')[1]);
+        let subnetSlash = parseInt(ipAddress[3].split('/')[1]);
 
         // convert to integer and validate ip IP Address
         ipAddress[3] = ipAddress[3].split('/')[0];
@@ -41,18 +40,24 @@ document.onload = () => {
         });
 
         if (!(ipAddress.every(element => isInRange(element, 0, 255)))) {
-            // log error
-            return;
+            throw new Error("Invalid IP address.");
         }
 
         // get IP class
-        const IPv4Class = getIpv4Class();
+        const IPv4Class = getIpv4Class(ipAddress[0]);
 
-        // if subnet is valid go ahead and contract the full address
+        // if subnet is valid go ahead and construct the full address
         // create subnet from slash-notation
-        // const fullSubnetMask = getSubnetMask(subnetMask);
+        if (!isSubnetValid(IPv4Class, subnetSlash)) {
+            throw new Error("Invalid subnet mask.");
+        }
 
-        //
+        // check that the returned mask is full
+        const fullSubnetMask = getFullSubnetMask(subnetMask);
+        if (fullSubnetMask == -1) {
+            throw new Error("Unable to construct subnetmask.");
+        }
+
 
     }
 } // end loading document
@@ -62,14 +67,14 @@ document.onload = () => {
  * @param {Integer} number - current number 
  * @param {Integer} min - lowest value
  * @param {Integer} max - highest value
- * @returns true if the is between min and max
+ * @returns True if the is between min and max
  */
 export const isInRange = (number, min, max) => (number >= min && number <= max);
 
 /**
  * Find which network class this IP address belongs to
- * @param {Integer} firstOctect - the first octect of Ip address
- * @returns the IP class
+ * @param {Integer} firstOctect - The first octect of Ip address
+ * @returns The IP class (A, B, C, D, E)
  */
 export const getIpv4Class = (firstOctect) => {
     let ipClass;
@@ -84,6 +89,9 @@ export const getIpv4Class = (firstOctect) => {
     else if (isInRange(firstOctect, 240, 255))
         ipClass = IPClass.E;
     else {
+        /**
+         * TODO - make sure this function return only one data type
+         */
         ipClass = "Invalid first Octect.";
     }
     return ipClass;
@@ -92,7 +100,7 @@ export const getIpv4Class = (firstOctect) => {
 /**
  * Find out if the slash notation gotten from IP address is valid
  * @param {IPClass} ipClass - IP class obtained from first octect
- * @param {Integer} slash - the /number gotten from IP address
+ * @param {Integer} slash - The /number gotten from IP address
  * @returns true or false
  */
 export const isSubnetValid = (ipClass, slash) => {
@@ -108,14 +116,14 @@ export const isSubnetValid = (ipClass, slash) => {
 
 /**
  * Construct full subnetmask based on slash notaion
- * @param {Number} slashNotation  - the number of ON bits
- * @returns and array of lenght 4 octects
+ * @param {Number} slashNotation - The number of ON bits
+ * @returns An array of lenght 4 octects
  */
 export const getFullSubnetMask = (slashNotation) => {
     let subnetMask = [];
 
     // if the number is outside range 8-30 returns -1 
-    if (!isInRange(slashNotation, 8, 30)) return -1;
+    if (!isInRange(slashNotation, 8, 30)) return -1; // TODO make sure function returns one data type
 
     // the default address is 0.0.0.0
     let bits = "00000000000000000000000000000000";
@@ -136,6 +144,12 @@ export const getFullSubnetMask = (slashNotation) => {
     for (let index = 0; index < 32; index += 8) {
         subnetMask.push(parseInt(bits.substring(index, index + 8), 2));
     }
-
     return subnetMask;
+}
+
+const getNetworkAddress = (ipAddress, subnetMask) => {
+    let network = [];
+    for (let index = 0; index < ipAddress.length; index++) {
+        network[index] = ipAddress[index] & subnetMask[index];
+    }
 }
