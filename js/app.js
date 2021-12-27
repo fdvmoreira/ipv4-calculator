@@ -54,7 +54,6 @@ document.onload = () => {
 
         //
 
-
     }
 } // end loading document
 
@@ -113,19 +112,30 @@ export const isSubnetValid = (ipClass, slash) => {
  * @returns and array of lenght 4 octects
  */
 export const getFullSubnetMask = (slashNotation) => {
-    let subnetMask;
+    let subnetMask = [];
 
     // if the number is outside range 8-30 returns -1 
     if (!isInRange(slashNotation, 8, 30)) return -1;
 
-    let bits = "000000000000000000000000000000";
+    // the default address is 0.0.0.0
+    let bits = "00000000000000000000000000000000";
+
+    // covert string to array so it can be modified with [index]
+    // replace the OFF(0) bits with ON(1) according to the lenght of slash notation
+    bits = bits.split("");
     for (let index = 0; index < slashNotation; index++) {
         bits[index] = "1";
     }
-    subnetMask.push(parseInt(bits.substring(0, 8), 2));
-    subnetMask.push(parseInt(bits.substring(8, 16), 2));
-    subnetMask.push(parseInt(bits.substring(16, 24), 2));
-    subnetMask.push(parseInt(bits.substring(24, 30), 2));
+
+    // convert array to string again
+    bits = bits.join("");
+
+    // convert binary substrings into decimal numbers and add them to array
+    // "11111111 11111111 11111111 11000000"
+    // "255      255      255      192"
+    for (let index = 0; index < 32; index += 8) {
+        subnetMask.push(parseInt(bits.substring(index, index + 8), 2));
+    }
 
     return subnetMask;
 }
