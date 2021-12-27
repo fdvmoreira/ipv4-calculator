@@ -67,7 +67,27 @@ describe("getFullSubnetMask", () => {
     it("getFullSubnetMask(31) should return -1", () => {
         expect(getFullSubnetMask(31)).toBe(-1);
     });
-    it("getFullSubnetMask(9) should return [255,1,0,0]", () => {
-        expect(JSON.stringify(getFullSubnetMask(9))).toMatch(JSON.stringify([255, 1, 0, 0]));
+    it("getFullSubnetMask(9) should return [255,128,0,0]", () => {
+        expect(JSON.stringify(getFullSubnetMask(9))).toMatch(JSON.stringify([255, 128, 0, 0]));
+    });
+    it("getFullSubnetMask(10) should return [255,192,0,0]", () => {
+        expect(getFullSubnetMask(10)).toEqual([255, 192, 0, 0]);
+    });
+    it("getFullSubnetMask(19) should return [255,255,224,0]", () => {
+        expect(getFullSubnetMask(19)).toEqual([255, 255, 224, 0]);
+    });
+    it("getFullSubnetMask(24) should return [255,255,255,0]", () => {
+        expect(getFullSubnetMask(24)).toEqual([255, 255, 255, 0]);
+    });
+    it("getFullSubnetMask(27) should return [255,255,255,224]", () => {
+        expect(getFullSubnetMask(27)).toEqual([255, 255, 255, 224]);
+    });
+    it("getFullSubnetMask(28) should return [255,255,255,240]", () => {
+        expect(JSON.stringify(getFullSubnetMask(28))).toMatch(JSON.stringify([255, 255, 255, 240]));
+    });
+    it("getFullSubnetMask(30) should return [255,255,255,252]", () => {
+        expect(JSON.stringify(getFullSubnetMask(30))).toMatch(JSON.stringify([255, 255, 255, 252]));
     });
 });
+//   ^7  ^6  ^5  ^4 ^3 ^2 ^1 ^0
+// 128  64  32  16  8  4  2  1
