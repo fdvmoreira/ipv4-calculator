@@ -1,5 +1,5 @@
 // let app = require("../js/app.js");
-import { isInRange, getIpv4Class, isSubnetValid, getFullSubnetMask } from '../js/app';
+import { isInRange, getIpv4Class, isSubnetValid, getFullSubnetMask, getNetworkAddress } from '../js/app';
 import IPClass from '../js/IPClass';
 
 describe("isInRange()", () => {
@@ -60,7 +60,7 @@ describe("isSubnetValid()", () => {
     });
 });
 
-describe("getFullSubnetMask", () => {
+describe("getFullSubnetMask()", () => {
     it("getFullSubnetMask(4) should return -1", () => {
         expect(getFullSubnetMask(4)).toBe(-1);
     });
@@ -91,3 +91,12 @@ describe("getFullSubnetMask", () => {
 });
 //   ^7  ^6  ^5  ^4 ^3 ^2 ^1 ^0
 // 128  64  32  16  8  4  2  1
+
+describe("getNetworkAddress()", () => {
+    it("getNetworkAddress([15,45,89,78], [255,255,255,128]) should return [15, 45, 89,0]", () => {
+        expect(getNetworkAddress([15, 45, 89, 78], [255, 255, 255, 128])).toEqual([15, 45, 89, 0]);
+    });
+    it("getNetworkAddress([199,78,99,18], [255,255,255,240]) should return [199,78,99,16]", () => {
+        expect(getNetworkAddress([199, 78, 99, 18], [255, 255, 255, 240])).toEqual([199, 78, 99, 16]);
+    });
+});

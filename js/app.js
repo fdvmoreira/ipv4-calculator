@@ -147,9 +147,21 @@ export const getFullSubnetMask = (slashNotation) => {
     return subnetMask;
 }
 
-const getNetworkAddress = (ipAddress, subnetMask) => {
+/**
+ * ANDing the address with the mask
+ * @param {number[]} ipAddress - IP address
+ * @param {number[]} subnetMask - Subnet mask
+ * @returns The ANDing result
+ */
+export const getNetworkAddress = (ipAddress, subnetMask) => {
     let network = [];
     for (let index = 0; index < ipAddress.length; index++) {
         network[index] = ipAddress[index] & subnetMask[index];
     }
+    return network;
+    //  78 = 01001110
+    // 128 = 10000000
+    //       00000000
 }
+
+
