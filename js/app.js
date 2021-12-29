@@ -157,11 +157,38 @@ export const getNetworkAddress = (ipAddress, subnetMask) => {
     let network = [];
     for (let index = 0; index < ipAddress.length; index++) {
         network[index] = ipAddress[index] & subnetMask[index];
+        //  78 = 01001110
+        // 128 = 10000000
+        //       00000000
     }
     return network;
-    //  78 = 01001110
-    // 128 = 10000000
-    //       00000000
 }
 
 
+export const getSubnetCount = (slash, ipClass) => {
+    let binarySubnetMask = [];
+    for (let index = 0; index < 32; index++) {
+        if (index < slash) {
+            binarySubnetMask[index] = '1';
+            continue;
+        }
+        binarySubnetMask[index] = '0';
+    }
+
+    switch (ipClass) {
+        case IPClass.A:
+            // count the number of 0s and 1s
+            slash - 8;
+            32 - slash;
+            break;
+        case IPClass.B:
+            break;
+        case IPClass.C:
+            break;
+        case IPClass.D:
+            break;
+        case IPClass.E:
+            break;
+        default:
+    }
+}
