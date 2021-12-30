@@ -7,8 +7,8 @@
 // [*] get IP class
 // [*] validate the subnetmask
 // [*] construct the subnetmask
-// [] AND the mask to find network and host portions
-// [] count the subnet and host bits
+// [*] AND the mask to find network and host portions
+// [*] count the subnet and host bits
 // [] get the network and the broadcast address of each subnet
 // [] print the results
 // 
@@ -52,11 +52,16 @@ document.onload = () => {
             throw new Error("Invalid subnet mask.");
         }
 
-        // check that the returned mask is full
+        // Get and check that the returned mask is full
         const fullSubnetMask = getFullSubnetMask(subnetMask);
         if (fullSubnetMask == -1) {
             throw new Error("Unable to construct subnetmask.");
         }
+
+        const networkID = getNetworkAddress(ipAddress, fullSubnetMask);
+
+        // Get the counts of subnets and hosts
+        const [subnetCount, hostCount] = getSubnetCount(slash, IPv4Class);
 
 
     }
