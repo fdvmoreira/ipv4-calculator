@@ -164,9 +164,17 @@ export const getNetworkAddress = (ipAddress, subnetMask) => {
     return network;
 }
 
-
+/**
+ * Get the number of subnets and host from a slash notation
+ * @param {Integer} slash - /n mask
+ * @param {IPClass} ipClass - ip class
+ * @returns an object containing the hosts and subnets
+ */
 export const getSubnetCount = (slash, ipClass) => {
     let binarySubnetMask = [];
+    let numberOfSubnets = 0;
+    let numberOfHosts = (2 ** (32 - slash)) - 2; // 2^k-2
+
     for (let index = 0; index < 32; index++) {
         if (index < slash) {
             binarySubnetMask[index] = '1';
@@ -177,18 +185,23 @@ export const getSubnetCount = (slash, ipClass) => {
 
     switch (ipClass) {
         case IPClass.A:
-            // count the number of 0s and 1s
-            slash - 8;
-            32 - slash;
+            numberOfSubnets = slash - 8;
             break;
         case IPClass.B:
+            numberOfSubnets = slash - 16;
             break;
         case IPClass.C:
+            numberOfSubnets = slash - 24;
             break;
         case IPClass.D:
+            numberOfSubnets = slash - 27;
             break;
         case IPClass.E:
+            numberOfSubnets = slash - 28;
             break;
         default:
     }
+
+    numberOfSubnets = 2 ** numberOfSubnets; //2^k
+    return { numberOfSubnets, numberOfHosts };
 }

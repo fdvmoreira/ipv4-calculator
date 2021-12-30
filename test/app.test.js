@@ -1,5 +1,12 @@
-// let app = require("../js/app.js");
-import { isInRange, getIpv4Class, isSubnetValid, getFullSubnetMask, getNetworkAddress } from '../js/app';
+
+import {
+    isInRange,
+    getIpv4Class,
+    isSubnetValid,
+    getFullSubnetMask,
+    getNetworkAddress,
+    getSubnetCount
+} from '../js/app';
 import IPClass from '../js/IPClass';
 
 describe("isInRange()", () => {
@@ -100,3 +107,27 @@ describe("getNetworkAddress()", () => {
         expect(getNetworkAddress([199, 78, 99, 18], [255, 255, 255, 240])).toEqual([199, 78, 99, 16]);
     });
 });
+
+describe("getSubnetCount()", () => {
+    it("getSubnetCount(23,IPClass.A) should return {'numberOfHosts': 510, 'numberOfSubnets':32768}", () => {
+        expect(getSubnetCount(23, IPClass.A)).toEqual({
+            "numberOfHosts": 510, "numberOfSubnets": 32768
+        });
+    });
+    it("getSubnetCount(24,IPClass.C) should return {'numberOfHosts': 254, 'numberOfSubnets':1}", () => {
+        expect(getSubnetCount(24, IPClass.C)).toEqual({
+            "numberOfHosts": 254, "numberOfSubnets": 1
+        });
+    });
+    it("getSubnetCount(8,IPClass.A) should return {'numberOfHosts': 16777214, 'numberOfSubnets':1}", () => {
+        expect(getSubnetCount(8, IPClass.A)).toEqual({
+            "numberOfHosts": 16777214, "numberOfSubnets": 1
+        });
+    });
+    it("getSubnetCount(16,IPClass.B) should return {'numberOfHosts': 65534, 'numberOfSubnets':1}", () => {
+        expect(getSubnetCount(16, IPClass.B)).toEqual({
+            "numberOfHosts": 65534, "numberOfSubnets": 1
+        });
+    });
+});
+
