@@ -36,9 +36,3 @@ This project is licensed under the [MIT License](LICENSE). Feel free to use, mod
 Contributions and feedback are welcome! If you find a bug, have a feature request, or want to contribute to the project, please feel free to submit an issue or create a pull request.
 
 **Note:** Any code submitted to this repository is assumed to be under an MIT license unless explicitly stated.
-
-## Acknowledgments
-
-Special thanks to the [OpenAI GPT-3.5](https://openai.com/research/gpt-3) for its language generation capabilities that aided in creating this README file.
-
-
