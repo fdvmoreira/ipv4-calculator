@@ -26,15 +26,16 @@ This tool is designed to assist users in calculating IPv4 subnet addresses based
 
 ## Installation
 
-This tool is a web application and does not require any installation. Simply access the tool through a web browser and input the necessary information to perform subnet address calculations.
-
-## Contributing
-
-Contributions and feedback are welcome! If you find a bug, have a feature request, or want to contribute to the project, please feel free to submit an issue or create a pull request.
+This tool is a web application and does not require any installation. Simply access it through a web browser and input the necessary information to perform subnet address calculations.
 
 ## License
 
 This project is licensed under the [MIT License](LICENSE). Feel free to use, modify, and distribute the code as needed.
+## Contributing
+
+Contributions and feedback are welcome! If you find a bug, have a feature request, or want to contribute to the project, please feel free to submit an issue or create a pull request.
+
+**Note:** Any code submitted to this repository is assumed to be under an MIT license unless explicitly stated.
 
 ## Acknowledgments
 
