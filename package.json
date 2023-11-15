@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "IPv4 Subnet Calculator",
   "main": "/js/app.js",
+  "type": "module",
   "scripts": {
-    "test": "jest"
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --verbose --coverage --setupFilesAfterEnv './jest.setup.js'"
   },
   "repository": {
     "type": "git",
