@@ -19,7 +19,6 @@
   },
   "homepage": "https://github.com/fdvmoreira/ipv4-subnet-calculator#readme",
   "devDependencies": {
-    "@babel/preset-env": "^7.23.3",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0"
   }
