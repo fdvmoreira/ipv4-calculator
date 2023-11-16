@@ -1,22 +1,44 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>IPv4 Subnet Calculator</title>
     <!-- scripts -->
     <script type="module" src="js/app.js" defer></script>
     <!-- styles -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css" />
 </head>
 
 <body>
     <main class="container">
         <form>
-            <input class="input-control" type="text" id="ip-address-tf" placeholder="Example 192.168.0.1/24">
+            <input class="input-control" type="text" id="ip-address-tf" placeholder="192.168.0.1/24" />
+            <input type="submit" value="calculate">
         </form>
+        <div class="output">
+            <table>
+                <thead>
+                    <tt>Output</tt>
+                    <th></th>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Ip address</td>
+                        <td>211321321312</td>
+                    </tr>
+                    <tr>
+                        <td>subnet</td>
+                        <td>/25</td>
+                    </tr>
+                </tbody>
+
+                <tfoot></tfoot>
+            </table>
+        </div>
     </main>
 </body>
 
