@@ -73,4 +73,24 @@ export function convertBinaryToDecimal(array){
   return total;
 }
 
-/**  */
+/**
+ * Convert integers to binary
+ * @param {number} value - the number to be converted
+ * @throws {InvalidNumberError} - throws when the number is not an integer
+ * @returns {Array.<number>|null} - an array of bits 1s and 0s
+ */
+export function convertUnsignedIntegerToBinary(value){
+  if (isNaN(value)) throw new TypeError("Not A Number");
+
+  if(value < 0) return null;
+  /** @type {Array.<number>|null} */
+  let remainders = [];
+
+  while(value > 1){
+    remainders?.push(value % 2);
+    value = Math.floor(value / 2);
+  }
+  remainders?.push(value);
+
+  return remainders?.reverse()??null;
+}
