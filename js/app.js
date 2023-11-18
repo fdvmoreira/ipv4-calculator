@@ -1,4 +1,3 @@
-
 //@ts-check
 
 /** @type {HTMLFormElement | null} */
@@ -21,8 +20,6 @@ window.onload = (_ev) => {
       formControls.namedItem("ip-address")
     ).value;
 
-    /** @type {number} */
-    const LAST_OCTECT_IDX = 3;
     /** @type {Array.<number>} */
     let ipOctects = [];
     /** @type {number | null} */
@@ -58,4 +55,22 @@ export function InvalidIpAddressError(message, additionalInfo) {
 }
 Object.setPrototypeOf(InvalidIpAddressError, Error.prototype);
 
+/**
+ * Convert binary number to decimal
+ * @param {Array.<number>} array - the array of bit to convert
+ * @throws {InvalidBinaryNumberError} - may throw Error.name = "InvalidNinaryNumberError"
+ * @returns {number} - the decimal representation
+ */
+export function convertBinaryToDecimal(array){
+  /** @type {number} */
+  let total = 0;
 
+  for(let [index, value] of array.reverse().entries()){
+    if(![0,1].includes(value)) throw (new TypeError("InvalidBinaryNumberError: the array contain invalid binary number")).name="InvalidBinaryNumberError";
+    if(value === 1) total += (2**index);
+  }
+
+  return total;
+}
+
+/**  */
