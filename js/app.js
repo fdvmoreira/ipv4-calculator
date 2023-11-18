@@ -1,3 +1,4 @@
+
 //@ts-check
 
 /** @type {HTMLFormElement | null} */
@@ -39,7 +40,11 @@ window.onload = (_ev) => {
     } catch (error) {
       console.error(error);
     }
-    debugger
+
+    // validate the ip address
+    // validate the slash mask
+    //
+    ipOctects.every((value) => value);
   });
 };
 
@@ -61,13 +66,16 @@ Object.setPrototypeOf(InvalidIpAddressError, Error.prototype);
  * @throws {InvalidBinaryNumberError} - may throw Error.name = "InvalidNinaryNumberError"
  * @returns {number} - the decimal representation
  */
-export function convertBinaryToDecimal(array){
+export function convertBinaryToDecimal(array) {
   /** @type {number} */
   let total = 0;
 
-  for(let [index, value] of array.reverse().entries()){
-    if(![0,1].includes(value)) throw (new TypeError("InvalidBinaryNumberError: the array contain invalid binary number")).name="InvalidBinaryNumberError";
-    if(value === 1) total += (2**index);
+  for (let [index, value] of array.reverse().entries()) {
+    if (![0, 1].includes(value))
+      throw (new TypeError(
+        "InvalidBinaryNumberError: the array contain invalid binary number",
+      ).name = "InvalidBinaryNumberError");
+    if (value === 1) total += 2 ** index;
   }
 
   return total;
@@ -79,18 +87,28 @@ export function convertBinaryToDecimal(array){
  * @throws {InvalidNumberError} - throws when the number is not an integer
  * @returns {Array.<number>|null} - an array of bits 1s and 0s
  */
-export function convertUnsignedIntegerToBinary(value){
+export function convertUnsignedIntegerToBinary(value) {
   if (isNaN(value)) throw new TypeError("Not A Number");
 
-  if(value < 0) return null;
+  if (value < 0) return null;
   /** @type {Array.<number>|null} */
   let remainders = [];
 
-  while(value > 1){
+  while (value > 1) {
     remainders?.push(value % 2);
     value = Math.floor(value / 2);
   }
   remainders?.push(value);
 
-  return remainders?.reverse()??null;
+  return remainders?.reverse() ?? null;
+}
+
+/**
+ * Validate the IP address
+ * @param {Array.<number>} octets - an array of octets (IP address)
+ * @returns {boolean} - weather or not the IP address is valid
+ */
+export function validateIpOctects(octets) {
+  if (octets?.length !== 4 || octets.at(0) === 127) return false;
+  return octets.every((octect) => octect >= 0 && octect <= 255);
 }
