@@ -2,7 +2,10 @@
 /** @jest-environment jsdom */
 
 import { describe, test, expect } from "@jest/globals";
-import { convertBinaryToDecimal } from "../js/app";
+import {
+  convertBinaryToDecimal,
+  convertUnsignedIntegerToBinary,
+} from "../js/app";
 
 /**
  * Binary to Decimal Coverter
@@ -46,6 +49,40 @@ describe("convertBinaryToDecimal", () => {
   test("should throw an InvalidBinaryNumberError", () => {
     expect(() => convertBinaryToDecimal([2, 0, 0, 1, 0])).toThrowError(
       "InvalidBinaryNumberError",
+    );
+  });
+});
+
+/**
+ * @group {Util}
+ */
+describe("convertUnsignedIntegerToBinary", () => {
+  /**
+   * @test {Util}
+   */
+  test("should convert decimal to binary", () => {
+    expect(convertUnsignedIntegerToBinary(4)).toEqual([1, 0, 0]);
+    expect(convertUnsignedIntegerToBinary(128)).toEqual([1, 0, 0, 0, 0, 0, 0, 0]);
+    expect(convertUnsignedIntegerToBinary(255)).toEqual([
+      1, 1, 1, 1, 1, 1, 1, 1,
+    ]);
+    expect(convertUnsignedIntegerToBinary(1)).toEqual([1]);
+    expect(convertUnsignedIntegerToBinary(0)).toEqual([0]);
+  });
+
+  /**
+   * @test {Util}
+   */
+  test("should return NULL", () => {
+    expect(convertUnsignedIntegerToBinary(-111)).toBeNull();
+  });
+
+  /**
+   * @test {Util}
+   */
+  test("should throw TypeError", () => {
+    expect(() => convertUnsignedIntegerToBinary("a234")).toThrowError(
+      TypeError,
     );
   });
 });
