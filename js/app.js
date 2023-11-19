@@ -1,6 +1,17 @@
 
 //@ts-check
 
+/** @typedef {number} IPClass */
+
+/** @enum {IPClass} */
+export var IpClasses = Object.freeze({
+  A: 0xa,
+  B: 0xb,
+  C: 0xc,
+  D: 0xd,
+  E: 0xe,
+});
+
 /** @type {HTMLFormElement | null} */
 const inputForm = document.querySelector("form");
 
@@ -111,4 +122,33 @@ export function convertUnsignedIntegerToBinary(value) {
 export function validateIpOctects(octets) {
   if (octets?.length !== 4 || octets.at(0) === 127) return false;
   return octets.every((octect) => octect >= 0 && octect <= 255);
+}
+
+/**
+ * Validate slash mask according based on the IP Class
+ * @param {IpClasses} ipClass - ip class
+ * @param {number} mask - the slash mask
+ * @returns {boolean} - weather or not the mask is valid
+ */
+export function validateSlashMask(ipClass, mask) {
+  if (mask < 8 || mask > 30) return false;
+
+  /** @type {boolean} */
+  let valid = false;
+
+  switch (ipClass) {
+    case IpClasses.A:
+      valid = mask >= 8;
+      break;
+    case IpClasses.B:
+      valid = mask >= 16;
+      break;
+    case IpClasses.C:
+      valid = mask >= 24;
+      break;
+    default:
+      valid = false;
+  }
+
+  return valid;
 }
