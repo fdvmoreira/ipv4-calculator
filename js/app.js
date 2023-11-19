@@ -152,3 +152,28 @@ export function validateSlashMask(ipClass, mask) {
 
   return valid;
 }
+
+/**
+ * Get subnet mask from slash notation
+ * @param {!number} slash - the slash notation to get the subnet from
+ * @returns {Array.<number>} the subnet mask octets
+ */
+export function generateSubnetMask(slash) {
+  if (slash < 8 || slash > 30) return [];
+
+  /** @type {Array.<number>} */
+  const maskBits = new Array(32).fill(0);
+
+  for (let i = 0; i < slash; i++) {
+    maskBits[i] = 1;
+  }
+
+  /** @type {Array.<number>} */
+  let subnet = [];
+
+  for (let y = 0; y < maskBits.length; y += 8) {
+    subnet.push(convertBinaryToDecimal(maskBits.slice(y, y + 8)));
+  }
+
+  return subnet;
+}
