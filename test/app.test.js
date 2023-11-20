@@ -6,6 +6,7 @@ import {
   IpClasses,
   generateSubnetMask,
   getIpClass,
+  getNetworkID,
   validateIpOctects,
   validateSlashMask,
 } from "../js/app";
@@ -94,5 +95,41 @@ describe("getIpClass", () => {
     expect(getIpClass(240, IpClasses)).toEqual(IpClasses.E);
     expect(getIpClass(255, IpClasses)).toEqual(IpClasses.E);
     expect(getIpClass(256, IpClasses)).toEqual(IpClasses.X);
+  });
+});
+
+/**
+ * @group App
+ */
+describe("getNetworkID", () => {
+  /**
+   * @test {App}
+   */
+  test("should NOT return a valid Ip Address", () => {
+    expect(getNetworkID([4], [5, 5, 6, 7])).toHaveLength(0);
+    expect(getNetworkID([4, 5, 6, 7], [5, 5, 6, 7, 7])).toHaveLength(0);
+    expect(getNetworkID([], [5, 5, 6, 7])).toHaveLength(0);
+  });
+
+  /**
+   * @test {App}
+   */
+  test("should return network ID", () => {
+    expect(getNetworkID([10, 0, 2, 6], [255, 255, 255, 0])).toHaveLength(4);
+    expect(getNetworkID([192, 168, 4, 23], [255, 255, 255, 0])).toEqual([
+      192, 168, 4, 0,
+    ]);
+    expect(getNetworkID([172, 16, 32, 87], [255, 255, 0, 0])).toEqual([
+      172, 16, 0, 0,
+    ]);
+    expect(getNetworkID([10, 32, 43, 54], [255, 0, 0, 0])).toEqual([
+      10, 0, 0, 0,
+    ]);
+    expect(getNetworkID([222, 43, 54, 76], [255, 255, 255, 45])).toEqual([
+      222, 43, 54, 12,
+    ]);
+    expect(getNetworkID([230, 43, 54, 55], [255, 255, 255, 66])).toEqual([
+      230, 43, 54, 2,
+    ]);
   });
 });

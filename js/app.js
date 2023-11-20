@@ -199,3 +199,22 @@ export function getIpClass(firstOctect, map) {
     return map["X"];
   }
 }
+
+/**
+ * Get the network ID
+ * @param {!Array.<number>} ip - the ip address
+ * @param {!Array.<number>} mask - subnet mask
+ * @returns {Array.<number>} the network ID
+ */
+export function getNetworkID(ip, mask) {
+  if (ip.length !== 4 || mask.length !== 4) return [];
+
+  /** @type {Array.<number>} */
+  let networkID = [];
+
+  for (let i = 0; i < ip.length; i++) {
+    networkID.push(ip[i] & mask[i]);
+  }
+
+  return networkID;
+}
