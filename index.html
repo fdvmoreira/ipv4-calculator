@@ -16,28 +16,50 @@
     <main class="container">
         <form>
             <input class="input-control" type="text" name="ip-address" placeholder="192.168.0.1/24" />
-            <input type="submit" value="calculate">
+            <input type="submit" value="calculate" />
         </form>
         <div class="output">
             <table>
-                <thead>
-                    <tt>Output</tt>
-                    <th></th>
+                <thead colspan="2" border="1">
+                    <th colspan="2">Output</th>
                 </thead>
 
                 <tbody>
                     <tr>
-                        <td>Ip address</td>
-                        <td>211321321312</td>
+                        <th>Ipv4 Class</th>
+                        <td data-id="ip-class"></td>
                     </tr>
                     <tr>
-                        <td>subnet</td>
-                        <td>/25</td>
+                        <th>Ip Address</th>
+                        <td data-id="ip-address"></td>
+                    </tr>
+                    <tr>
+                        <th>Slash</th>
+                        <td data-id="slash-mask"></td>
+                    </tr>
+                    <tr>
+                        <th>Subnet</th>
+                        <td data-id="subnet-mask"></td>
+                    </tr>
+                    <tr>
+                        <th>Binary Subnet Mask</th>
+                        <td data-id="binary-subnet-mask"></td>
+                    </tr>
+                    <tr>
+                        <th>Number of Subnets</th>
+                        <td data-id="number-of-subnets"></td>
+                    </tr>
+                    <tr>
+                        <th>Number of Hosts</th>
+                        <td data-id="number-of-hosts"></td>
                     </tr>
                 </tbody>
 
                 <tfoot></tfoot>
             </table>
+            <div class="subnets" data-id="subnet-output">
+                <!-- details here to show the subnets and their hosts -->
+            </div>
         </div>
     </main>
 </body>
