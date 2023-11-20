@@ -54,8 +54,8 @@ window.onload = (_ev) => {
 
     // validate the ip address
     // validate the slash mask
+    // ip&&mask
     //
-    ipOctects.every((value) => value);
   });
 };
 
@@ -176,4 +176,26 @@ export function generateSubnetMask(slash) {
   }
 
   return subnet;
+}
+
+/**
+ * Get the IP class from first octect
+ * @param {number} firstOctect - the first octect of the ip address
+ * @param {Object} map - the object mapping the ip
+ * @returns {string} return the ip class
+ */
+export function getIpClass(firstOctect, map) {
+  if (firstOctect >= 0 && firstOctect <= 127) {
+    return map["A"];
+  } else if (firstOctect >= 128 && firstOctect <= 191) {
+    return map["B"];
+  } else if (firstOctect >= 192 && firstOctect <= 223) {
+    return map["C"];
+  } else if (firstOctect >= 224 && firstOctect < 240) {
+    return map["D"];
+  } else if (firstOctect >= 240 && firstOctect <= 255) {
+    return map["E"];
+  } else {
+    return map["X"];
+  }
 }

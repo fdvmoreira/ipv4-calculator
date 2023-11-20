@@ -5,6 +5,7 @@ import { describe, expect, test } from "@jest/globals";
 import {
   IpClasses,
   generateSubnetMask,
+  getIpClass,
   validateIpOctects,
   validateSlashMask,
 } from "../js/app";
@@ -70,5 +71,28 @@ describe("generateSubnetMask", () => {
     expect(generateSubnetMask(26)).toEqual([255, 255, 255, 192]);
     expect(generateSubnetMask(16)).toEqual([255, 255, 0, 0]);
     expect(generateSubnetMask(10)).toEqual([255, 192, 0, 0]);
+  });
+});
+
+/**
+ * @group App
+ */
+describe("getIpClass", () => {
+  /**
+   * @test {App}
+   */
+  test("should return the IP Class", () => {
+    expect(getIpClass(0, IpClasses)).toEqual(IpClasses.A);
+    expect(getIpClass(127, IpClasses)).toEqual(IpClasses.A);
+    expect(getIpClass(128, IpClasses)).toEqual(IpClasses.B);
+    expect(getIpClass(191, IpClasses)).toEqual(IpClasses.B);
+    expect(getIpClass(192, IpClasses)).toEqual(IpClasses.C);
+    expect(getIpClass(223, IpClasses)).toEqual(IpClasses.C);
+    expect(getIpClass(225, IpClasses)).toEqual(IpClasses.D);
+    expect(getIpClass(239, IpClasses)).toEqual(IpClasses.D);
+    expect(getIpClass(224, IpClasses)).toEqual(IpClasses.D);
+    expect(getIpClass(240, IpClasses)).toEqual(IpClasses.E);
+    expect(getIpClass(255, IpClasses)).toEqual(IpClasses.E);
+    expect(getIpClass(256, IpClasses)).toEqual(IpClasses.X);
   });
 });
