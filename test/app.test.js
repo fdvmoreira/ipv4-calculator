@@ -4,6 +4,7 @@
 import { describe, expect, test } from "@jest/globals";
 import {
   IpClasses,
+  flipOctet,
   generateSubnetMask,
   getIpClass,
   getNetworkID,
@@ -131,5 +132,28 @@ describe("getNetworkID", () => {
     expect(getNetworkID([230, 43, 54, 55], [255, 255, 255, 66])).toEqual([
       230, 43, 54, 2,
     ]);
+  });
+});
+/**
+ * @group App
+ */
+describe("flipOctet", () => {
+  /**
+   * @test {App}
+   */
+  test("should NOT flip number greater than 8-bits integers", () => {
+    expect(flipOctet(256)).toEqual(0);
+    expect(flipOctet(-1)).toEqual(0);
+    expect(flipOctet(566)).toEqual(0);
+  });
+
+  /**
+   * @test {App}
+   */
+  test("should flip bits in an octet", () => {
+    expect(flipOctet(parseInt("00000000", 2))).toEqual(parseInt("11111111", 2));
+    expect(flipOctet(parseInt("01111111", 2))).toEqual(parseInt("10000000", 2));
+    expect(flipOctet(parseInt("00111111", 2))).toEqual(parseInt("11000000", 2));
+    expect(flipOctet(parseInt("00011111", 2))).toEqual(parseInt("11100000", 2));
   });
 });
