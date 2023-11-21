@@ -218,3 +218,12 @@ export function getNetworkID(ip, mask) {
 
   return networkID;
 }
+/**
+ * Flip octet bits
+ * @param {!number} octet -  the octect to be flipped
+ * @returns {number} - the flipped bits
+ */
+export function flipOctet(octet) {
+  if (octet < 0 || octet > 255) return 0;
+  return parseInt((~octet >>> 0).toString(2).slice(32 - 8), 2);
+}
